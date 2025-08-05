@@ -1,0 +1,67 @@
+{
+    "name": "mundophpbb/stopbadbots",
+    "type": "phpbb-extension",
+    "description": "Extension to block malicious bots based on User-Agent, IP and Referer.",
+    "homepage": "https://mundophpbb.com.br/",
+    "version": "3.5.0-dev",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Mundo phpBB",
+            "email": "chicogois@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "phpbb/phpbb": ">=3.3.0"
+    },
+    "extra": {
+        "display-name": "Stop Bad Bots",
+        "soft-require": {
+            "phpbb/phpbb": ">=3.3.0"
+        },
+        "version-check": {
+            "host": "mundophpbb.com.br",
+            "directory": "/updates/",
+            "filename": "stopbadbots.json",
+            "ssl": true
+        },
+        "services": {
+            "mundophpbb.stopbadbots.acp_controller": {
+                "class": "mundophpbb\\stopbadbots\\controller\\acp_controller",
+                "arguments": [
+                    "@dbal.conn",
+                    "@config",
+                    "@template",
+                    "@language",
+                    "@request",
+                    "@user",
+                    "%table_prefix%",
+                    "%php_ext%",
+                    "@log",
+                    "@pagination",
+                    "@files.factory",
+                    "@mundophpbb.stopbadbots.cron_task",
+                    "@cache.driver",
+                    "%core.root_path%"
+                ]
+            },
+            "mundophpbb.stopbadbots.cron_task": {
+                "class": "mundophpbb\\stopbadbots\\cron\\cron_task",
+                "arguments": [
+                    "@dbal.conn",
+                    "@config",
+                    "@cache.driver",
+                    "%table_prefix%",
+                    "@log"
+                ]
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "mundophpbb\\stopbadbots\\": ""
+        }
+    }
+}
