@@ -5,7 +5,6 @@
  * @license https://opensource.org/licenses/GPL-2.0 GPL-2.0-only
  */
 namespace mundophpbb\stopbadbots\controller;
-
 use phpbb\config\config;
 use phpbb\db\driver\driver_interface;
 use phpbb\template\template;
@@ -16,7 +15,6 @@ use phpbb\user;
 use phpbb\pagination;
 use phpbb\files\upload;
 use phpbb\cache\driver\driver_interface as cache_driver;
-
 class acp_controller
 {
     const COMPOSER_FILE = 'ext/mundophpbb/stopbadbots/composer.json';
@@ -35,7 +33,6 @@ class acp_controller
     protected $cron;
     protected $cache;
     protected $root_path;
-
     public function __construct(
         driver_interface $db,
         config $config,
@@ -56,7 +53,6 @@ class acp_controller
         if (!defined('DEBUG_STOPBADBOTS')) {
             define('DEBUG_STOPBADBOTS', (bool) ($config['stopbadbots_debug_enabled'] ?? false));
         }
-
         if (defined('DEBUG_STOPBADBOTS') && DEBUG_STOPBADBOTS) {
             error_log('acp_controller: Verificando dependências - db: ' . (is_object($db) ? get_class($db) : 'null'));
             error_log('acp_controller: config: ' . (is_object($config) ? get_class($config) : 'null'));
@@ -73,7 +69,6 @@ class acp_controller
             error_log('acp_controller: cache: ' . (is_object($cache) ? get_class($cache) : 'null'));
             error_log('acp_controller: root_path: ' . ($root_path ?: 'vazio'));
         }
-
         $missing = [];
         if (!$db) $missing[] = 'Driver do banco de dados não injetado';
         if (!$config) $missing[] = 'Configurações do phpBB não injetadas';
@@ -94,7 +89,6 @@ class acp_controller
             }
             throw new \Exception($error_message);
         }
-
         $root_path = $root_path ?: (defined('PHPBB_ROOT_PATH') ? PHPBB_ROOT_PATH : realpath(__DIR__ . '/../../../') . '/');
         $root_path = str_replace('\\', '/', $root_path);
         if (empty($root_path) || !is_dir($root_path)) {
@@ -103,7 +97,6 @@ class acp_controller
             }
             throw new \Exception('Caminho raiz inválido ou não especificado.');
         }
-
         $this->db = $db;
         $this->config = $config;
         $this->template = $template;
@@ -122,7 +115,6 @@ class acp_controller
             error_log('acp_controller: Inicializado com prefixo da tabela ' . $table_prefix . ', Session ID: ' . ($user->session_id ?: 'vazio') . ', root_path: ' . $this->root_path);
         }
     }
-
     public function set_u_action($u_action)
     {
         $this->u_action = $u_action;
@@ -130,7 +122,6 @@ class acp_controller
             error_log('acp_controller: u_action definido como: ' . $u_action);
         }
     }
-
     public function handle($mode)
     {
         $lang_code = preg_replace('/[^a-zA-Z0-9_-]/', '', $this->request->variable('lang', $this->config['default_lang'] ?: 'en'));
@@ -146,12 +137,10 @@ class acp_controller
                 error_log('acp_controller: Idioma ' . $lang_code . ' não encontrado, usando fallback para en');
             }
         }
-
         $this->cache->destroy('_lang_' . $lang_code);
         if (defined('DEBUG_STOPBADBOTS') && DEBUG_STOPBADBOTS) {
             error_log('acp_controller: Cache de idioma limpo para: ' . $lang_code);
         }
-
         $extension_version = 'N/A';
         $jsonFilePath = $this->root_path . self::COMPOSER_FILE;
         if (file_exists($jsonFilePath) && is_readable($jsonFilePath)) {
@@ -172,14 +161,12 @@ class acp_controller
         if (defined('DEBUG_STOPBADBOTS') && DEBUG_STOPBADBOTS) {
             error_log('acp_controller: Versão da extensão carregada: ' . $extension_version);
         }
-
         $this->template->assign_vars([
             'U_ACTION' => $this->u_action,
             'U_CLEAR_LOG' => $this->u_action . '&action=clear_log',
             'U_EXPORT_CSV' => $this->u_action . '&action=export_csv',
             'STOPBADBOTS_VERSION' => $extension_version,
         ]);
-
         switch ($mode) {
             case 'settings':
                 $action = $this->request->variable('action', '');
@@ -241,7 +228,6 @@ class acp_controller
                 trigger_error($this->language->lang('INVALID_MODE'), E_USER_ERROR);
         }
     }
-
     protected function handle_run_cron()
     {
         $form_key = 'sbb_config';
@@ -269,7 +255,6 @@ class acp_controller
         }
         $this->handle_settings();
     }
-
     protected function handle_reset_default()
     {
         $form_key = 'sbb_config';
@@ -322,6 +307,9 @@ class acp_controller
                     ['list_type' => 'ip_blacklist', 'value' => '192.168.1.0/24', 'added_at' => time()],
                     ['list_type' => 'ref_blacklist', 'value' => '000Free.us', 'added_at' => time()],
                     ['list_type' => 'ua_whitelist', 'value' => 'Googlebot', 'added_at' => time()],
+                    ['list_type' => 'ua_whitelist', 'value' => 'bingbot', 'added_at' => time()],
+                    ['list_type' => 'ua_whitelist', 'value' => 'YandexBot', 'added_at' => time()],
+                    ['list_type' => 'ua_whitelist', 'value' => 'DuckDuckBot', 'added_at' => time()],
                     ['list_type' => 'ip_whitelist', 'value' => '192.168.1.1', 'added_at' => time()],
                     ['list_type' => 'ref_whitelist', 'value' => 'example.com', 'added_at' => time()],
                 ];
@@ -349,25 +337,21 @@ class acp_controller
         }
         $this->handle_settings();
     }
-
     protected function handle_load_more_list()
 {
     $list_type = $this->request->variable('list_type', '');
     $offset = $this->request->variable('offset', 0, false, \phpbb\request\request::GET);
     $per_page = $this->request->variable('per_page', 50, false, \phpbb\request\request::GET);
-
     if (!in_array($list_type, ['ua_blacklist', 'ip_blacklist', 'ref_blacklist', 'ua_whitelist', 'ip_whitelist', 'ref_whitelist'])) {
         header('Content-Type: application/json');
         echo json_encode(['success' => false, 'message' => $this->language->lang('INVALID_LIST_TYPE')]);
         exit;
     }
-
     try {
         $sql = 'SELECT id, value, added_at, is_active FROM ' . $this->table_prefix . 'stopbadbots_lists
                 WHERE list_type = "' . $this->db->sql_escape($list_type) . '"
                 ORDER BY value ASC';
         $result = $this->db->sql_query_limit($sql, (int) $per_page, (int) $offset);
-
         $entries = [];
         while ($row = $this->db->sql_fetchrow($result)) {
             $entries[] = [
@@ -379,12 +363,10 @@ class acp_controller
             ];
         }
         $this->db->sql_freeresult($result);
-
         $sql = 'SELECT COUNT(*) AS count FROM ' . $this->table_prefix . 'stopbadbots_lists WHERE list_type = "' . $this->db->sql_escape($list_type) . '"';
         $result = $this->db->sql_query($sql);
         $total = (int) $this->db->sql_fetchfield('count');
         $this->db->sql_freeresult($result);
-
         header('Content-Type: application/json');
         echo json_encode([
             'success' => true,
@@ -400,7 +382,6 @@ class acp_controller
     }
     exit;
 }
-
     protected function handle_lists()
     {
         $form_key = 'sbb_lists';
@@ -413,11 +394,9 @@ class acp_controller
         $search = $this->request->variable('list_search', '', true);
         $error = [];
         $success = false;
-
         if (defined('DEBUG_STOPBADBOTS') && DEBUG_STOPBADBOTS) {
             error_log('acp_controller: handle_lists - Ação: ' . $action . ', Form token: ' . $this->request->variable('form_token', '') . ', POST: ' . json_encode($_POST));
         }
-
         if ($this->request->is_set_post('clear_search')) {
             if (!check_form_key($form_key)) {
                 $this->logger->add('admin', $this->user->data['user_id'], $this->user->ip, 'FORM_INVALID', time(), ['Form key inválido para clear_search']);
@@ -432,7 +411,6 @@ class acp_controller
                 redirect($this->u_action);
             }
         }
-
         if ($this->request->is_set_post('submit') || $this->request->is_set_post('submit_search')) {
             if (!check_form_key($form_key)) {
                 $this->logger->add('admin', $this->user->data['user_id'], $this->user->ip, 'FORM_INVALID', time(), ['Form key inválido para listas']);
@@ -613,7 +591,6 @@ class acp_controller
                 }
             }
         }
-
         if ($action === 'delete' && $id) {
             if (confirm_box(true)) {
                 try {
@@ -634,7 +611,6 @@ class acp_controller
                 ]));
             }
         }
-
         if ($action === 'mass_delete' && $this->request->is_set_post('submit')) {
             if ($this->request->is_set_post('confirm')) {
                 if (confirm_box(true)) {
@@ -683,7 +659,6 @@ class acp_controller
                 }
             }
         }
-
         $list_type_map = [
             'ua_blacklist' => $this->language->lang('USER_AGENT_LIST'),
             'ip_blacklist' => $this->language->lang('IP_ADDRESS_LIST'),
@@ -755,7 +730,6 @@ class acp_controller
             'L_NO_SEARCH_RESULTS' => $this->language->lang('NO_SEARCH_RESULTS'),
         ]);
     }
-
     protected function get_list_type_lang($list_type)
     {
         $list_type_map = [
@@ -769,7 +743,6 @@ class acp_controller
         ];
         return $list_type_map[$list_type] ?? 'UNKNOWN_LIST_TYPE';
     }
-
     protected function detect_list_type($lines)
     {
         foreach ($lines as $line) {
@@ -785,7 +758,6 @@ class acp_controller
         }
         return false;
     }
-
     protected function import_default_lists()
     {
         $files = [
@@ -859,7 +831,6 @@ class acp_controller
         }
         return $count_added;
     }
-
     protected function handle_logs()
     {
         $form_key = 'sbb_logs';
@@ -1026,7 +997,6 @@ class acp_controller
             trigger_error($this->language->lang('DB_ERROR', htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8')) . adm_back_link($this->u_action), E_USER_ERROR);
         }
     }
-
     protected function clear_log()
     {
         if (confirm_box(true)) {
@@ -1048,7 +1018,6 @@ class acp_controller
             ]));
         }
     }
-
     protected function add_list_entry($list_type, $value)
     {
         $value = substr($value, 0, 255);
@@ -1091,7 +1060,6 @@ class acp_controller
             return false;
         }
     }
-
     protected function update_list_entry($id, $value)
     {
         $value = substr($value, 0, 255);
@@ -1124,7 +1092,6 @@ class acp_controller
             trigger_error($this->language->lang('DB_ERROR', htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8')) . adm_back_link($this->u_action), E_USER_ERROR);
         }
     }
-
     protected function delete_list_entry($id)
     {
         $sql = 'DELETE FROM ' . $this->table_prefix . 'stopbadbots_lists WHERE id = ' . (int) $id;
@@ -1138,7 +1105,6 @@ class acp_controller
             trigger_error($this->language->lang('DB_ERROR', htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8')) . adm_back_link($this->u_action), E_USER_ERROR);
         }
     }
-
     protected function save_lists($data)
     {
         $list_types = ['ua_blacklist', 'ip_blacklist', 'ref_blacklist', 'ua_whitelist', 'ip_whitelist', 'ref_whitelist'];
@@ -1162,7 +1128,6 @@ class acp_controller
             }
         }
     }
-
     protected function load_lists($search = '')
     {
         $lists = [
@@ -1193,7 +1158,6 @@ class acp_controller
         }
         return $lists;
     }
-
     protected function sanitize_list($input, $is_user_agent = false)
     {
         $lines = explode("\n", trim($input));
@@ -1217,7 +1181,6 @@ class acp_controller
         sort($sanitized);
         return $sanitized;
     }
-
     protected function sanitize_ip_list($input)
     {
         $lines = explode("\n", trim($input));
@@ -1236,7 +1199,6 @@ class acp_controller
         sort($sanitized);
         return $sanitized;
     }
-
     protected function validate_ip_or_cidr($ip)
     {
         if (filter_var($ip, FILTER_VALIDATE_IP)) {
@@ -1256,7 +1218,6 @@ class acp_controller
         }
         return false;
     }
-
     protected function handle_settings()
     {
         $form_key = 'sbb_config';
@@ -1266,7 +1227,6 @@ class acp_controller
         }
         $error = [];
         $success = false;
-
         if ($this->request->is_set_post('submit')) {
             if (!check_form_key($form_key)) {
                 $this->logger->add('admin', $this->user->data['user_id'], $this->user->ip, 'FORM_INVALID', time(), ['Form key inválido para configurações']);
@@ -1297,7 +1257,6 @@ class acp_controller
                 $success = true;
             }
         }
-
         // Calcular estatísticas diárias
         $today_start = strtotime('today midnight');
         $sql = 'SELECT reason, COUNT(*) AS count
@@ -1333,7 +1292,6 @@ class acp_controller
             $this->logger->add('admin', $this->user->data['user_id'], $this->user->ip, 'STOPBADBOTS_LOG_ERROR', time(), ['Erro ao calcular estatísticas: ' . $e->getMessage()]);
             $error[] = $this->language->lang('DB_ERROR', htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8'));
         }
-
         // Atribuir variáveis ao template
         $this->template->assign_vars([
             'S_ERROR' => !empty($error),
@@ -1353,7 +1311,6 @@ class acp_controller
             'CRON_LAST_RUN' => $this->config['stopbadbots_cron_last_run'] ? $this->user->format_date($this->config['stopbadbots_cron_last_run']) : $this->language->lang('NEVER'),
         ]);
     }
-
     protected function handle_overview()
     {
         $form_key = 'sbb_lists';
@@ -1411,7 +1368,6 @@ class acp_controller
             }
         }
     }
-
     protected function handle_save_lists()
     {
         $form_key = 'sbb_lists';
@@ -1421,7 +1377,6 @@ class acp_controller
         }
         $error = [];
         $success = false;
-
         if ($this->request->is_set_post('submit')) {
             if (!check_form_key($form_key)) {
                 $this->logger->add('admin', $this->user->data['user_id'], $this->user->ip, 'FORM_INVALID', time(), ['Form key inválido para save_lists']);
@@ -1473,14 +1428,12 @@ class acp_controller
                 }
             }
         }
-
         $this->template->assign_vars([
             'S_ERROR' => !empty($error),
             'ERROR_MESSAGE' => implode('<br />', $error),
             'S_SUCCESS' => $success,
             'SUCCESS_MESSAGE' => $success ? $this->language->lang('ACP_STOPBADBOTS_LISTS_SAVED') : '',
         ]);
-
         $this->handle_overview();
     }
 }
