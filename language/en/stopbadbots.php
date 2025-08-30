@@ -1,0 +1,226 @@
+<?php
+/**
+ * @package mundophpbb\stopbadbots
+ * @copyright (c) 2025 Mundo phpBB
+ * @license https://opensource.org/licenses/GPL-2.0 GPL-2.0-only
+ */
+
+/**
+ * Language file for stopbadbots extension (English)
+ * This file contains the translations for the StopBadBots extension in English.
+ */
+
+if (!defined('IN_PHPBB')) {
+    exit;
+}
+
+if (empty($lang) || !is_array($lang)) {
+    $lang = [];
+}
+
+$lang = array_merge($lang, [
+    // General
+    'ACP_STOPBADBOTS'                   => 'Stop Bad Bots',
+    'ACP_STOPBADBOTS_TITLE'             => 'Stop Bad Bots',
+    'ACP_STOPBADBOTS_SETTINGS'          => 'Settings',
+    'ACP_STOPBADBOTS_SETTINGS_EXPLAIN'  => 'Configure options to block malicious bots based on User-Agent, IP address, and referer.',
+    'ACP_STOPBADBOTS_LISTS'             => 'Block Lists',
+    'ACP_STOPBADBOTS_LISTS_EXPLAIN'     => 'Manage block and allow lists for User-Agents, IPs, and Referers.',
+    'ACP_STOPBADBOTS_LOGS'              => 'Block Logs',
+    'ACP_STOPBADBOTS_RESTORE'           => 'Restore Default Settings',
+    'ACP_STOPBADBOTS_RESTORE_EXPLAIN'   => 'Restores the default settings for the Stop Bad Bots extension, clearing the lists table and reinserting initial data.',
+    'ACP_STOPBADBOTS_OVERVIEW'          => 'Overview',
+    'ACP_STOPBADBOTS_OVERVIEW_EXPLAIN'  => 'Manage all bot block and allow lists in a simplified interface.',
+    'ACP_STOPBADBOTS_VERSION'           => 'Extension Version',
+
+    // Settings
+    'ACP_STOPBADBOTS_ENABLED'                   => 'Enable Stop Bad Bots',
+    'ACP_STOPBADBOTS_ENABLED_EXPLAIN'           => 'Enables or disables protection against malicious bots.',
+    'ACP_STOPBADBOTS_CRON_ENABLED'              => 'Enable Cron Task',
+    'ACP_STOPBADBOTS_CRON_ENABLED_EXPLAIN'      => 'Enables or disables the cron task for log cleanup and statistics updates.',
+    'ACP_STOPBADBOTS_CRON_INTERVAL'             => 'Cron Execution Interval',
+    'ACP_STOPBADBOTS_CRON_INTERVAL_EXPLAIN'     => 'Interval in seconds between cron task executions (minimum 3600 seconds, equivalent to 1 hour).',
+    'ACP_STOPBADBOTS_CRON_INTERVAL_ERROR'       => 'The cron interval must be at least 3600 seconds (1 hour).',
+    'ACP_STOPBADBOTS_LOG_RETENTION_DAYS'        => 'Log Retention Days',
+    'ACP_STOPBADBOTS_LOG_RETENTION_DAYS_EXPLAIN'=> 'Number of days to keep block logs before they are automatically deleted (minimum 1 day).',
+    'ACP_STOPBADBOTS_USE_X_FORWARDED_FOR'       => 'Use X-Forwarded-For for IP Identification',
+    'ACP_STOPBADBOTS_USE_X_FORWARDED_FOR_EXPLAIN'=> 'Enable this option only if your server is behind a trusted proxy that correctly sets the X-Forwarded-For header. Otherwise, keep it disabled to use REMOTE_ADDR and avoid incorrect blocks.',
+    'ACP_STOPBADBOTS_STATISTICS'                => 'Block Statistics',
+    'ACP_STOPBADBOTS_STATISTICS_EXPLAIN'        => 'Graph showing the number of daily blocks by type (User-Agent, IP, Referer).',
+    'ACP_STOPBADBOTS_DAILY_BLOCKS'              => 'Daily Blocks',
+    'ACP_STOPBADBOTS_BLOCKS'                    => 'Number of Blocks',
+    'ACP_STOPBADBOTS_RESET_DEFAULT'             => 'Restore Default Settings',
+    'ACP_STOPBADBOTS_RESET_DEFAULT_SUCCESS'     => 'Settings restored to default values successfully!',
+    'ACP_STOPBADBOTS_SAVED'                     => 'Settings saved successfully!',
+    'ACP_STOPBADBOTS_CRON_RUN_SUCCESS'          => 'Cron task executed successfully!',
+    'ACP_STOPBADBOTS_LISTS_SAVED'               => 'Lists saved successfully!',
+    
+    // Block Lists
+    'ACP_STOPBADBOTS_UA_LIST'           => 'User-Agent Blacklist',
+    'ACP_STOPBADBOTS_UA_LIST_EXPLAIN'   => 'Enter one User-Agent per line to block (e.g., "_zbot" or "BadBot"). Only the first field is used for comma-separated values.',
+    'ACP_STOPBADBOTS_IP_LIST'           => 'IP Blacklist',
+    'ACP_STOPBADBOTS_IP_LIST_EXPLAIN'   => 'Enter one IP address or CIDR range per line to block (e.g., "1.180.70.178" or "192.168.1.0/24").',
+    'ACP_STOPBADBOTS_REF_LIST'          => 'Referer Blacklist',
+    'ACP_STOPBADBOTS_REF_LIST_EXPLAIN'  => 'Enter one referer per line to block (e.g., "000Free.us" or "example.com"). The protocol is ignored.',
+    'ACP_STOPBADBOTS_UA_WHITELIST'      => 'User-Agent Whitelist',
+    'ACP_STOPBADBOTS_UA_WHITELIST_EXPLAIN' => 'Enter one User-Agent per line to allow (e.g., "Googlebot").',
+    'ACP_STOPBADBOTS_IP_WHITELIST'      => 'IP Whitelist',
+    'ACP_STOPBADBOTS_IP_WHITELIST_EXPLAIN' => 'Enter one IP address or CIDR range per line to allow (e.g., "192.168.1.1" or "192.168.1.0/24").',
+    'ACP_STOPBADBOTS_REF_WHITELIST'     => 'Referer Whitelist',
+    'ACP_STOPBADBOTS_REF_WHITELIST_EXPLAIN' => 'Enter one referer per line to allow (e.g., "example.com").',
+    'ACP_STOPBADBOTS_UA_ADDED'          => 'User-Agent added successfully!',
+    'ACP_STOPBADBOTS_IP_ADDED'          => 'IP address added successfully!',
+    'ACP_STOPBADBOTS_REF_ADDED'         => 'Referer added successfully!',
+    'ACP_STOPBADBOTS_UA_WHITELIST_ADDED' => 'User-Agent (Whitelist) added successfully!',
+    'ACP_STOPBADBOTS_IP_WHITELIST_ADDED' => 'IP address (Whitelist) added successfully!',
+    'ACP_STOPBADBOTS_REF_WHITELIST_ADDED' => 'Referer (Whitelist) added successfully!',
+    'ACP_STOPBADBOTS_LIST_UPDATED'      => 'Entry updated successfully!',
+    'ACP_STOPBADBOTS_LIST_DELETED'      => 'Entry removed successfully!',
+    'ACP_STOPBADBOTS_LISTS_DELETED'     => 'Selected entries removed successfully!',
+    'ACP_STOPBADBOTS_DUPLICATE_ENTRY'   => 'Duplicate entry: %s already exists in the %s list.',
+    'ACP_STOPBADBOTS_LIST_UPLOADED'     => '%d entries were added to the list successfully.',
+
+    // Accessibility Descriptions for Forms
+    'NEW_USER_AGENT_EXPLAIN'    => 'Enter a User-Agent to add to the blacklist.',
+    'NEW_IP_ADDRESS_EXPLAIN'    => 'Enter an IP address or CIDR range to add to the blacklist.',
+    'NEW_REFERER_EXPLAIN'       => 'Enter a referer to add to the blacklist.',
+    'NEW_UA_WHITELIST_EXPLAIN'  => 'Enter a User-Agent to add to the whitelist.',
+    'NEW_IP_WHITELIST_EXPLAIN'  => 'Enter an IP address or CIDR range to add to the whitelist.',
+    'NEW_REF_WHITELIST_EXPLAIN' => 'Enter a referer to add to the whitelist.',
+    'SEARCH_LIST_EXPLAIN'       => 'Enter a term to search in the User-Agent, IP, or Referer lists.',
+
+    // Empty List Messages
+    'NO_ENTRIES'        => 'No entries found.',
+    'NO_UA_WHITELIST'   => 'No User-Agent in the whitelist.',
+    'NO_IP_WHITELIST'   => 'No IP in the whitelist.',
+    'NO_REF_WHITELIST'  => 'No Referer in the whitelist.',
+
+    // Generic Actions
+    'ADD'       => 'Add',
+    'SUBMIT'    => 'Submit',
+    'RESET'     => 'Reset',
+
+    // Upload and Import
+    'UPLOAD_LIST_TYPE'                  => 'List Type',
+    'UPLOAD_LIST_TYPE_EXPLAIN'          => 'Select the type of list for which the file will be imported.',
+    'UPLOAD_LIST_FILE'                  => 'List File (.txt or .csv)',
+    'UPLOAD_LIST_FILE_EXPLAIN'          => 'Select a text file (.txt or .csv) containing one entry per line (e.g., User-Agents, IPs, or Referers). For CSV files, only the first field is used.',
+    'UPLOAD'                            => 'Upload',
+    'UPLOADING'                         => 'Uploading...',
+    'IMPORT_FROM_TXT_FILES'             => 'Import from Default Lists (bots.txt, botsip.txt, botsref.txt)',
+    'IMPORTING'                         => 'Importing...',
+    'ACP_STOPBADBOTS_DEFAULT_LISTS_IMPORTED' => 'Default lists imported successfully: %d entries added.',
+    'STOPBADBOTS_DEFAULT_LIST_IMPORTED' => 'Default list imported: %d entries added to %s.',
+    'STOPBADBOTS_IMPORT_FAILED'         => 'Failed to import default list: %s.',
+    'ACP_STOPBADBOTS_IMPORT_FAILED'     => 'Error importing default list: %s.',
+    'FILE_READ_ERROR'                   => 'Error reading file %s. Check if the file exists and has read permissions.',
+
+    // Logs
+    'ACP_STOPBADBOTS_BLOCKED'               => 'Access denied: %s',
+    'LOG_BOT_BLOCKED'                       => 'Bot blocked: %s',
+    'LOG_CLEARED'                           => 'Block logs cleared successfully.',
+    'SEARCH_LOGS'                           => 'Search Logs',
+    'SEARCH_LOGS_EXPLAIN'                   => 'Search logs by User-Agent, IP, Referer, or reason.',
+    'SEARCH_LOGS_PLACEHOLDER'               => 'Enter User-Agent, IP, Referer, or reason',
+    'DATE_FROM'                             => 'Start Date',
+    'DATE_TO'                               => 'End Date',
+    'EXPORT_LOGS'                           => 'Export Logs as CSV',
+    'NO_LOG_ENTRIES'                        => 'No block log entries found.',
+    'LOG_TIME'                              => 'Date/Time',
+    'USER_AGENT'                            => 'User-Agent',
+    'IP'                                    => 'IP Address',
+    'REFERER'                           => 'Referer',
+    'REASON'                                => 'Reason',
+    'ALL'                               => 'All',
+
+    // Statistics and Cron
+    'STATISTICS_AND_CRON'       => 'Statistics and Cron',
+    'CRON_LAST_RUN'             => 'Last Cron Execution',
+    'DAILY_BLOCKS'              => 'Total Daily Blocks',
+    'RUN_CRON'                  => 'Run Cron Now',
+    'CONFIRM_RUN_CRON'          => 'Are you sure you want to run the cron task now?',
+    'NEVER'                     => 'Never',
+    'STOPBADBOTS_CRON_DISABLED' => 'Cron task is disabled.',
+    'STOPBADBOTS_LOG_CLEANED'   => 'Old logs cleaned successfully: %d entries removed.',
+    'STOPBADBOTS_LOG_ERROR'     => 'Cron task error: %s',
+
+    // Search and Filters
+    'SEARCH_LIST'               => 'Search Lists',
+    'SEARCH_LIST_PLACEHOLDER'   => 'Enter User-Agent, IP, or Referer',
+    'CLEAR_SEARCH'              => 'Clear Search',
+    'SEARCH_RESULTS'            => 'Search Results',
+    'NO_SEARCH_PERFORMED'       => 'No search was performed.',
+    'NO_SEARCH_RESULTS'         => 'No results found for the searched term.',
+    'CHOOSE_FILE'               => 'Choose File',
+    'FILTER_LIST'               => 'Filter List',
+    'FILTER_UA_LIST'            => 'Filter Blocked User-Agent List',
+    'FILTER_IP_LIST'            => 'Filter Blocked IP List',
+    'FILTER_REF_LIST'           => 'Filter Blocked Referer List',
+    'FILTER_UA_WHITELIST'       => 'Filter Whitelisted User-Agent List',
+    'FILTER_IP_WHITELIST'       => 'Filter Whitelisted IP List',
+    'FILTER_REF_WHITELIST'      => 'Filter Whitelisted Referer List',
+    'FILTER_BY_LIST_TYPE'       => 'Filter by List Type',
+
+    // List Actions
+    'ADD_USER_AGENT'            => 'Add User-Agent',
+    'ADD_IP_ADDRESS'            => 'Add IP Address',
+    'ADD_REFERER'               => 'Add Referer',
+    'NEW_USER_AGENT'            => 'New User-Agent',
+    'NEW_IP_ADDRESS'            => 'New IP Address',
+    'NEW_REFERER'               => 'New Referer',
+    'NEW_UA_WHITELIST'          => 'New User-Agent (Whitelist)',
+    'NEW_IP_WHITELIST'          => 'New IP Address (Whitelist)',
+    'NEW_REF_WHITELIST'         => 'New Referer (Whitelist)',
+    'DELETE_SELECTED'           => 'Delete Selected',
+    'SELECT'                    => 'Select',
+    'SELECT_ALL'                => 'Select All',
+    'NO_ENTRIES_SELECTED'       => 'No entries were selected for deletion.',
+    'NO_USER_AGENTS'            => 'No User-Agent in the list.',
+    'NO_IP_ADDRESSES'           => 'No IP in the list.',
+    'NO_REFERERS'               => 'No Referer in the list.',
+    'USER_AGENT_LIST'           => 'User-Agent List',
+    'IP_ADDRESS_LIST'           => 'IP List',
+    'REFERER_LIST'              => 'Referer List',
+    'BLOCK_LOG'                 => 'Block Log',
+    'OPTIONS'                   => 'Options',
+    'ADDED_TIME'                => 'Added Date',
+    'LIST_TYPE'                 => 'List Type',
+
+    // Confirmations
+    'CONFIRM_RESET_DEFAULT'         => 'Are you sure you want to restore default settings? This will delete all current lists and reinsert initial data.',
+    'CONFIRM_CLEAR_LOG'             => 'Clear Logs',
+    'CONFIRM_CLEAR_LOG_MESSAGE'     => 'Are you sure you want to clear all block logs?',
+    'CONFIRM_DELETE_LIST'           => 'Are you sure you want to delete this entry?',
+    'CONFIRM_DELETE_SELECTED_LISTS' => 'Are you sure you want to delete the selected entries?',
+
+    // Errors
+    'FORM_INVALID'                      => 'Invalid form. Try again.',
+    'INVALID_IP'                        => 'Invalid IP or CIDR format.',
+    'INVALID_REFERER'                   => 'Invalid Referer format. Must be a valid domain or URL.',
+    'DB_ERROR'                          => 'Database error: %s',
+    'LOG_ERROR'                         => 'Stop Bad Bots extension error: %s',
+    'TABLE_NOT_FOUND'                   => 'Table not found: %s',
+    'INVALID_MODE'                      => 'Invalid mode specified.',
+    'FILE_NOT_FOUND'                    => 'The file %s was not found.',
+    'FILE_NOT_READABLE'                 => 'The file %s is not readable.',
+    'FILE_READ_ERROR'                   => 'Error reading file %s. Check if the file exists and has read permissions.',
+    'INVALID_LIST_TYPE'                 => 'Invalid list type selected.',
+    'NO_FILE_UPLOADED'                  => 'No file was uploaded.',
+    'INVALID_LIST_TYPE_MISMATCH'        => 'File content does not match the selected list type. Check the file format.',
+    'INVALID_FILE_TYPE'                 => 'Invalid file type. Only text files (.txt or .csv) are allowed.',
+    'UPLOAD_ERROR'                      => 'Unexpected error processing file upload. Try again.',
+    'FILEINFO_EXTENSION_NOT_ENABLED'    => 'The PHP fileinfo extension is not enabled. Check the configuration in php.ini.',
+    'INVALID_FILE_PATH'                 => 'Invalid or inaccessible file path. Check upload settings in php.ini.',
+    'LOAD_MORE'                         => 'Load More',
+    'LOAD_MORE_ERROR'                   => 'Error loading more entries. Try again later.',
+    'NO_ENTRY_FOUND'                    => 'No entry found in the specified list.',
+    'INVALID_SESSION'                   => 'Invalid session. Please log in again.',
+    'IMPORT_FROM_TXT_FILES_FAILED'      => 'Failed to import entries from text files.',
+    'TOTAL_LOGS'                        => 'Total Logs',
+    'PAGE_NUMBER'                       => 'Page',
+    'ACP_STOPBADBOTS_LIST_UPLOADED_WITH_TYPE' => 'StopBadBots list uploaded successfully',
+    'EXPORT_LOGS'                       => 'Export Logs as CSV',
+    'CONFIRM_EXPORT_LOGS_MESSAGE'       => 'Do you want to export the logs to a CSV file?',
+    'ACP_STOPBADBOTS_DEBUG_ENABLED'     => 'Enable Debug Mode',
+    'ACP_STOPBADBOTS_DEBUG_ENABLED_EXPLAIN' => 'Enables detailed logging for debugging the Stop Bad Bots extension. Use this option only for testing or diagnostics, as it may significantly increase log volume.',
+]);
