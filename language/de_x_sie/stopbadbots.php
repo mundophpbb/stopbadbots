@@ -97,7 +97,7 @@ $lang = array_merge($lang, [
 
     // Generic Actions
     'ADD'                           => 'Hinzufügen',
-    'SUBMIT'                        => 'Absenden',
+    'S_SUBMIT'                        => 'Absenden',
     'RESET'                         => 'Zurücksetzen',
 
     // Upload and Import
