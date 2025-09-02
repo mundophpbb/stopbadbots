@@ -1,22 +1,19 @@
 <!-- INCLUDE overall_header.html -->
 <!-- INCLUDECSS @mundophpbb_stopbadbots/stopbadbots.css -->
 <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <div class="stopbadbots-acp">
     <h1>{L_ACP_STOPBADBOTS_LISTS}</h1>
-
+    <p>{L_ACP_STOPBADBOTS_UPDATE_NOTICE}</p>
     <!-- IF S_ERROR -->
     <div class="errorbox">
         <h3>{L_ERROR}</h3>
         <p>{ERROR_MESSAGE}</p>
     </div>
     <!-- ENDIF -->
-
     <!-- IF S_CONFIRM_ACTION -->
     <!-- INCLUDE confirm_body.html -->
     <!-- ELSE -->
     <fieldset>
- 
         <!-- Formulário de busca -->
         <form id="search_list_form" method="post" action="{U_ACTION}">
             <dl>
@@ -24,14 +21,13 @@
                 <dd>
                     <div class="submit-buttons">
                         <input type="text" id="list_search" name="list_search" value="{LIST_SEARCH}" class="inputbox" placeholder="{L_SEARCH_LIST_PLACEHOLDER}" aria-describedby="search_list_explain" />
-                        <input type="submit" name="submit_search" value="{L_S_SUBMIT}" class="button" aria-label="{L_S_SUBMIT}" />
+                        <input type="submit" name="submit_search" value="{L_SUBMIT}" class="button" aria-label="{L_SUBMIT}" />
                         <input type="submit" name="clear_search" value="{L_CLEAR_SEARCH}" class="button remove" onclick="document.getElementById('list_search').value = '';" aria-label="{L_CLEAR_SEARCH}" />
                     </div>
                 </dd>
             </dl>
             {S_FORM_TOKEN}
         </form>
-
         <!-- Formulário para adicionar User-Agent (Blacklist) -->
         <form id="add_user_agent_form" method="post" action="{U_ACTION}&action=add_user_agent">
             <dl>
@@ -39,13 +35,12 @@
                 <dd>
                     <div class="submit-buttons">
                         <input type="text" id="new_user_agent" name="new_user_agent" value="" class="inputbox" aria-describedby="new_user_agent_explain" />
-                        <input type="submit" name="submit" value="{L_S_SUBMIT}" class="button" aria-label="{L_SUBMIT}" />
+                        <input type="submit" name="submit" value="{L_SUBMIT}" class="button" aria-label="{L_SUBMIT}" />
                     </div>
                 </dd>
             </dl>
             {S_FORM_TOKEN}
         </form>
-
         <!-- Formulário para adicionar IP (Blacklist) -->
         <form id="add_ip_form" method="post" action="{U_ACTION}&action=add_ip">
             <dl>
@@ -53,13 +48,12 @@
                 <dd>
                     <div class="submit-buttons">
                         <input type="text" id="new_ip_address" name="new_ip_address" value="" class="inputbox" aria-describedby="new_ip_address_explain" />
-                        <input type="submit" name="submit" value="{L_S_SUBMIT}" class="button" aria-label="{L_S_SUBMIT}" />
+                        <input type="submit" name="submit" value="{L_SUBMIT}" class="button" aria-label="{L_SUBMIT}" />
                     </div>
                 </dd>
             </dl>
             {S_FORM_TOKEN}
         </form>
-
         <!-- Formulário para adicionar Referer (Blacklist) -->
         <form id="add_referer_form" method="post" action="{U_ACTION}&action=add_referer">
             <dl>
@@ -67,13 +61,12 @@
                 <dd>
                     <div class="submit-buttons">
                         <input type="text" id="new_referer" name="new_referer" value="" class="inputbox" aria-describedby="new_referer_explain" />
-                        <input type="submit" name="submit" value="{L_S_SUBMIT}" class="button" aria-label="{L_S_SUBMIT}" />
+                        <input type="submit" name="submit" value="{L_SUBMIT}" class="button" aria-label="{L_SUBMIT}" />
                     </div>
                 </dd>
             </dl>
             {S_FORM_TOKEN}
         </form>
-
         <!-- Formulário para adicionar User-Agent (Whitelist) -->
         <form id="add_ua_whitelist_form" method="post" action="{U_ACTION}&action=add_ua_whitelist">
             <dl>
@@ -81,13 +74,12 @@
                 <dd>
                     <div class="submit-buttons">
                         <input type="text" id="new_ua_whitelist" name="new_ua_whitelist" value="" class="inputbox" aria-describedby="new_ua_whitelist_explain" />
-                        <input type="submit" name="submit" value="{L_S_SUBMIT}" class="button" aria-label="{L_S_SUBMIT}" />
+                        <input type="submit" name="submit" value="{L_SUBMIT}" class="button" aria-label="{L_SUBMIT}" />
                     </div>
                 </dd>
             </dl>
             {S_FORM_TOKEN}
         </form>
-
         <!-- Formulário para adicionar IP (Whitelist) -->
         <form id="add_ip_whitelist_form" method="post" action="{U_ACTION}&action=add_ip_whitelist">
             <dl>
@@ -95,13 +87,12 @@
                 <dd>
                     <div class="submit-buttons">
                         <input type="text" id="new_ip_whitelist" name="new_ip_whitelist" value="" class="inputbox" aria-describedby="new_ip_whitelist_explain" />
-                        <input type="submit" name="submit" value="{L_S_SUBMIT}" class="button" aria-label="{L_S_SUBMIT}" />
+                        <input type="submit" name="submit" value="{L_SUBMIT}" class="button" aria-label="{L_SUBMIT}" />
                     </div>
                 </dd>
             </dl>
             {S_FORM_TOKEN}
         </form>
-
         <!-- Formulário para adicionar Referer (Whitelist) -->
         <form id="add_ref_whitelist_form" method="post" action="{U_ACTION}&action=add_ref_whitelist">
             <dl>
@@ -109,13 +100,12 @@
                 <dd>
                     <div class="submit-buttons">
                         <input type="text" id="new_ref_whitelist" name="new_ref_whitelist" value="" class="inputbox" aria-describedby="new_ref_whitelist_explain" />
-                        <input type="submit" name="submit" value="{L_S_SUBMIT}" class="button" aria-label="{L_S_SUBMIT}" />
+                        <input type="submit" name="submit" value="{L_SUBMIT}" class="button" aria-label="{L_SUBMIT}" />
                     </div>
                 </dd>
             </dl>
             {S_FORM_TOKEN}
         </form>
-
         <!-- Formulário para upload de arquivo .txt ou .csv -->
         <form id="upload_list_form" method="post" action="{U_ACTION}&action=upload_list" enctype="multipart/form-data">
             <dl>
@@ -144,7 +134,6 @@
             </dl>
             {S_FORM_TOKEN}
         </form>
-
         <!-- Formulário para importar das listas padrão -->
         <form id="import_default_lists_form" method="post" action="{U_ACTION}&action=import_default_lists">
             <div class="submit-buttons import-buttons">
@@ -154,7 +143,6 @@
             </div>
         </form>
     </fieldset>
-
     <form id="mass_delete_form" method="post" action="{U_ACTION}&action=mass_delete" onsubmit="return validateMassDeleteForm();">
         <div class="panel">
             <div class="inner">
@@ -193,7 +181,6 @@
                 <!-- ELSE -->
                 <p>{L_NO_SEARCH_PERFORMED}</p>
                 <!-- ENDIF -->
-
                 <div class="submit-buttons">
                     <input type="submit" name="submit" value="{L_DELETE_SELECTED}" class="button" aria-label="{L_DELETE_SELECTED}" />
                 </div>
@@ -203,7 +190,6 @@
     </form>
     <!-- ENDIF -->
 </div>
-
 <script>
 function toggleSectionCheckboxes(source) {
     var table = source.closest('table');
@@ -212,7 +198,6 @@ function toggleSectionCheckboxes(source) {
         checkboxes[i].checked = source.checked;
     }
 }
-
 function validateMassDeleteForm() {
     var checkboxes = document.querySelectorAll('input[name="delete_ids[]"]:checked');
     if (checkboxes.length === 0) {
@@ -221,18 +206,15 @@ function validateMassDeleteForm() {
     }
     return true;
 }
-
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('upload_list_form').addEventListener('submit', function() {
         document.getElementById('upload_submit').disabled = true;
         document.getElementById('upload_progress').style.display = 'inline';
     });
-
     document.getElementById('import_default_lists_form').addEventListener('submit', function(e) {
         e.preventDefault();
         document.getElementById('import_submit').disabled = true;
         document.getElementById('import_progress').style.display = 'inline';
-
         fetch('{U_ACTION}&action=import_default_lists', {
             method: 'POST',
             headers: {
@@ -269,5 +251,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-
 <!-- INCLUDE overall_footer.html -->
