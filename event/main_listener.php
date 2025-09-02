@@ -246,6 +246,35 @@ class main_listener implements EventSubscriberInterface
                 '202.8.40.0/22', '202.94.84.110/31', '202.94.84.112/31',
             ],
         ],
+        'amazonbot' => [
+            'ua_substring' => 'Amazonbot',
+            'rdns_suffixes' => ['.amazonbot.amazon'],
+            'ip_ranges' => [],
+        ],
+        'baiduspider' => [
+            'ua_substring' => 'Baiduspider',
+            'rdns_suffixes' => ['.crawl.baidu.com', '.baidu.jp', '.baidu.com'],
+            'ip_ranges' => [
+                '61.135.168.0/24', '119.63.196.0/24', '119.63.198.0/24', '123.125.71.0/24', '180.76.5.0/24',
+                '180.76.6.0/24', '180.76.15.0/24', '220.181.108.0/24', '103.6.76.0/22', '104.193.88.0/22',
+                '185.10.104.0/22',
+            ],
+        ],
+        'exabot' => [
+            'ua_substring' => 'Exabot',
+            'rdns_suffixes' => ['.exabot.com'],
+            'ip_ranges' => [],
+        ],
+        'heisebot' => [
+            'ua_substring' => 'heise Bot',
+            'rdns_suffixes' => ['.heise.de'],
+            'ip_ranges' => [],
+        ],
+        'teoma' => [
+            'ua_substring' => 'Ask Jeeves/Teoma',
+            'rdns_suffixes' => ['.ask.com'],
+            'ip_ranges' => [],
+        ],
         'heritrix' => [
             'ua_substring' => 'heritrix',
             'rdns_suffixes' => ['.archive.org'],
